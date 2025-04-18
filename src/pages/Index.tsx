@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
-import PanelRegistration from "@/components/PanelRegistration";
-import PanelManagement from "@/components/PanelManagement";
 import Calculator from "@/components/Calculator";
+import PanelsDialog from "@/components/PanelsDialog";
 import type { LEDPanel } from "@/types/types";
 
 const Index = () => {
@@ -47,16 +46,13 @@ const Index = () => {
           </Button>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-6">
-            <PanelRegistration onPanelAdded={handlePanelAdded} />
-            <PanelManagement 
-              panels={panels}
-              onPanelDelete={handlePanelDelete}
-            />
-          </div>
-          <Calculator panels={panels} />
-        </div>
+        <PanelsDialog 
+          panels={panels}
+          onPanelAdded={handlePanelAdded}
+          onPanelDelete={handlePanelDelete}
+        />
+        
+        <Calculator panels={panels} />
       </div>
     </div>
   );
