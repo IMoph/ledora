@@ -1,6 +1,5 @@
 
-import { Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -10,25 +9,15 @@ import type { LEDPanel } from "@/types/types";
 interface PanelManagementProps {
   panels: LEDPanel[];
   onPanelDelete: (id: string) => void;
-  onPanelEdit: (panel: LEDPanel) => void;
 }
 
-const PanelManagement = ({ panels, onPanelDelete, onPanelEdit }: PanelManagementProps) => {
+const PanelManagement = ({ panels, onPanelDelete }: PanelManagementProps) => {
   const { toast } = useToast();
-  const [editingPanel, setEditingPanel] = useState<LEDPanel | null>(null);
 
   const handleDelete = (id: string) => {
     onPanelDelete(id);
     toast({
       description: "Painel removido com sucesso",
-    });
-  };
-
-  const handleEdit = (panel: LEDPanel) => {
-    setEditingPanel(panel);
-    onPanelEdit(panel);
-    toast({
-      description: "Editando painel...",
     });
   };
 
@@ -54,22 +43,13 @@ const PanelManagement = ({ panels, onPanelDelete, onPanelEdit }: PanelManagement
                     Resolução: {panel.resolutionWidth}x{panel.resolutionHeight}px
                   </p>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleEdit(panel)}
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    onClick={() => handleDelete(panel.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  onClick={() => handleDelete(panel.id)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </div>
             ))}
           </div>
