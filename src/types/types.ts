@@ -14,4 +14,8 @@ export interface CalculationResult {
   finalResolutionWidth: number;
   finalResolutionHeight: number;
   networkCablesNeeded: number;
+  widthInMeters: number;
+  heightInMeters: number;
+  areaInSquareMeters: number;
 }
+

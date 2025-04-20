@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { PanelManagement } from "@/components/PanelManagement";
+import PanelManagement from "@/components/PanelManagement";
 import PanelRegistration from "@/components/PanelRegistration";
 import type { LEDPanel } from "@/types/types";
 
@@ -31,3 +31,4 @@ const PanelsDialog = ({ panels, onPanelAdded, onPanelDelete }: PanelsDialogProps
 };
 
 export default PanelsDialog;
+
