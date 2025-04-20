@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Calculator as CalculatorIcon, Area, Dimensions } from "lucide-react";
+import { Calculator as CalculatorIcon, SquareGantt, Ruler } from "lucide-react";
 import type { LEDPanel, CalculationResult } from "@/types/types";
 
 const PIXELS_PER_NETWORK_CABLE = 655360;
@@ -110,14 +109,14 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
             variant={calculationMode === "dimensions" ? "default" : "outline"}
             onClick={() => setCalculationMode("dimensions")}
           >
-            <Dimensions className="mr-2" />
+            <Ruler className="mr-2" />
             Calcular por Dimensões
           </Button>
           <Button
             variant={calculationMode === "panels" ? "default" : "outline"}
             onClick={() => setCalculationMode("panels")}
           >
-            <Area className="mr-2" />
+            <SquareGantt className="mr-2" />
             Calcular por Quantidade
           </Button>
         </div>
@@ -199,4 +198,3 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
 };
 
 export default Calculator;
-
