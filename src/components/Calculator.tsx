@@ -1,12 +1,11 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { Calculator as CalculatorIcon, Square, Ruler } from "lucide-react";
+import { Calculator as CalculatorIcon, Layout, Ruler } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { LEDPanel, CalculationResult } from "@/types/types";
 
 const PIXELS_PER_NETWORK_CABLE = 655360;
@@ -23,6 +22,7 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
   });
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [calculationMode, setCalculationMode] = useState<"dimensions" | "panels">("dimensions");
+  const isMobile = useIsMobile();
 
   const calculateByDimensions = () => {
     const panel = panels.find((p) => p.id === selectedPanelId);
@@ -86,8 +86,8 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
   };
 
   return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Calculadora de Painéis</h2>
+    <Card className="p-4 md:p-6">
+      <h2 className="text-xl md:text-2xl font-bold mb-4">Calculadora de Painéis</h2>
       <div className="space-y-4">
         <div>
           <Label>Selecione o Modelo do Painel</Label>
@@ -105,25 +105,27 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
           </Select>
         </div>
 
-        <div className="flex gap-4">
+        <div className={`flex flex-col ${!isMobile ? 'sm:flex-row' : ''} gap-2 sm:gap-4`}>
           <Button
             variant={calculationMode === "dimensions" ? "default" : "outline"}
             onClick={() => setCalculationMode("dimensions")}
+            className="flex-1"
           >
-            <Ruler className="mr-2" />
-            Calcular por Dimensões
+            <Ruler className="mr-2 h-4 w-4" />
+            {isMobile ? "Por Dimensões" : "Calcular por Dimensões"}
           </Button>
           <Button
             variant={calculationMode === "panels" ? "default" : "outline"}
             onClick={() => setCalculationMode("panels")}
+            className="flex-1"
           >
-            <Square className="mr-2" />
-            Calcular por Quantidade
+            <Layout className="mr-2 h-4 w-4" />
+            {isMobile ? "Por Quantidade" : "Calcular por Quantidade"}
           </Button>
         </div>
 
         {calculationMode === "dimensions" ? (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="width">Largura Desejada (metros)</Label>
               <Input
@@ -133,6 +135,7 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
                 value={dimensions.width}
                 onChange={(e) => setDimensions({ ...dimensions, width: e.target.value })}
                 placeholder="Ex: 5"
+                className="mt-1"
               />
             </div>
             <div>
@@ -144,11 +147,12 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
                 value={dimensions.height}
                 onChange={(e) => setDimensions({ ...dimensions, height: e.target.value })}
                 placeholder="Ex: 2.5"
+                className="mt-1"
               />
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="panelsWidth">Quantidade de Painéis (Largura)</Label>
               <Input
@@ -157,6 +161,7 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
                 value={panelCount.width}
                 onChange={(e) => setPanelCount({ ...panelCount, width: e.target.value })}
                 placeholder="Ex: 4"
+                className="mt-1"
               />
             </div>
             <div>
@@ -167,6 +172,7 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
                 value={panelCount.height}
                 onChange={(e) => setPanelCount({ ...panelCount, height: e.target.value })}
                 placeholder="Ex: 3"
+                className="mt-1"
               />
             </div>
           </div>
@@ -177,19 +183,19 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
           className="w-full"
           disabled={!selectedPanelId || (calculationMode === "dimensions" ? (!dimensions.width || !dimensions.height) : (!panelCount.width || !panelCount.height))}
         >
-          <CalculatorIcon className="mr-2" />
+          <CalculatorIcon className="mr-2 h-4 w-4" />
           Calcular
         </Button>
 
         {result && (
-          <div className="mt-6 p-4 bg-muted rounded-lg">
+          <div className="mt-4 sm:mt-6 p-4 bg-muted rounded-lg space-y-2">
             <h3 className="font-semibold mb-2">Resultados:</h3>
-            <div className="space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
               <p>Quantidade de Placas: <span className="font-bold">{result.panelsNeeded}</span></p>
               <p>Resolução Final: <span className="font-bold">{result.finalResolutionWidth}x{result.finalResolutionHeight}px</span></p>
               <p>Dimensões Finais: <span className="font-bold">{result.widthInMeters.toFixed(2)}x{result.heightInMeters.toFixed(2)}m</span></p>
               <p>Área Total: <span className="font-bold">{result.areaInSquareMeters.toFixed(2)}m²</span></p>
-              <p>Cabos de Rede Necessários: <span className="font-bold">{result.networkCablesNeeded}</span></p>
+              <p>Cabos de Rede: <span className="font-bold">{result.networkCablesNeeded}</span></p>
             </div>
           </div>
         )}

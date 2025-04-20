@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Calculator from "@/components/Calculator";
 import PanelsDialog from "@/components/PanelsDialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { LEDPanel } from "@/types/types";
 
 const Index = () => {
   const { theme, setTheme } = useTheme();
+  const isMobile = useIsMobile();
   const [panels, setPanels] = useState<LEDPanel[]>(() => {
     const saved = localStorage.getItem("ledPanels");
     return saved ? JSON.parse(saved) : [];
@@ -27,30 +29,31 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">
-            Calculadora de Painéis LED
+    <div className="min-h-screen bg-background p-3 sm:p-6">
+      <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
+        <div className="flex justify-between items-center mb-4 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold">
+            {isMobile ? "LED Calc" : "Calculadora de Painéis LED"}
           </h1>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          >
-            {theme === 'dark' ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
-          </Button>
+          <div className="flex gap-2">
+            <PanelsDialog 
+              panels={panels}
+              onPanelAdded={handlePanelAdded}
+              onPanelDelete={handlePanelDelete}
+            />
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
         </div>
-        
-        <PanelsDialog 
-          panels={panels}
-          onPanelAdded={handlePanelAdded}
-          onPanelDelete={handlePanelDelete}
-        />
         
         <Calculator panels={panels} />
       </div>
