@@ -78,12 +78,12 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
       <h2 className="text-2xl font-bold mb-4">Cadastro de Placa</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="nameAndP">Nome da Placa <span className="font-normal text-xs">(ex: Empresa P3.9)</span></Label>
+          <Label htmlFor="nameAndP">Nome da Placa <span className="font-normal text-xs">(ex: P3.9 | Palco Central)</span></Label>
           <Input
             id="nameAndP"
             value={panel.nameAndP}
             onChange={(e) => setPanel({ ...panel, nameAndP: e.target.value })}
-            placeholder="Ex: Empresa P3.9"
+            placeholder="Ex: P3.9 | Palco Central"
             required
           />
         </div>
