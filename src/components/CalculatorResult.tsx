@@ -1,6 +1,5 @@
 
 import type { CalculationResult } from "@/types/types";
-import LEDPanelSchematic from "./LEDPanelSchematic";
 
 const CalculatorResult = ({ result }: { result: CalculationResult }) => (
   <div className="mt-4 sm:mt-6 p-4 bg-muted rounded-lg space-y-4">
@@ -12,8 +11,6 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
       <p>Área Total: <span className="font-bold">{result.areaInSquareMeters.toFixed(2)}m²</span></p>
       <p>Cabos de Rede: <span className="font-bold">{result.networkCablesNeeded}</span></p>
     </div>
-
-    <LEDPanelSchematic result={result} />
   </div>
 );
 
