@@ -84,7 +84,7 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
 
   return (
     <Card className="p-4 md:p-6">
-      <h2 className="text-xl md:text-2xl font-bold mb-4">Calculadora de Painéis</h2>
+      <h2 className="text-xl md:text-2xl font-bold mb-4">Calculadora de Placas LED</h2>
       <div className="space-y-4">
         <CalculatorPanelSelect
           panels={panels}
@@ -128,7 +128,7 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="panelsWidth">Quantidade de Painéis (Largura)</Label>
+              <Label htmlFor="panelsWidth">Quantidade de Placas (Largura)</Label>
               <Input
                 id="panelsWidth"
                 type="number"
@@ -139,7 +139,7 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
               />
             </div>
             <div>
-              <Label htmlFor="panelsHeight">Quantidade de Painéis (Altura)</Label>
+              <Label htmlFor="panelsHeight">Quantidade de Placas (Altura)</Label>
               <Input
                 id="panelsHeight"
                 type="number"
