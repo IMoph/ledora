@@ -11,7 +11,7 @@ interface CalculatorPanelSelectProps {
 
 const CalculatorPanelSelect = ({ panels, selectedPanelId, onSelectPanel }: CalculatorPanelSelectProps) => (
   <div>
-    <Label>Selecione o Modelo da Placa</Label>
+    <Label>Selecione o Modelo do Painel</Label>
     <Select value={selectedPanelId} onValueChange={onSelectPanel}>
       <SelectTrigger>
         <SelectValue placeholder="Escolha um modelo" />
