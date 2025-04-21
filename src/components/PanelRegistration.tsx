@@ -10,8 +10,7 @@ import type { LEDPanel } from "@/types/types";
 const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) => void }) => {
   const { toast } = useToast();
   const [panel, setPanel] = useState({
-    name: "",
-    pValue: "",
+    nameAndP: "",
     width: "",
     height: "",
     resolutionWidth: "",
@@ -20,8 +19,8 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!panel.name || !panel.pValue || !panel.width || !panel.height || !panel.resolutionWidth || !panel.resolutionHeight) {
+
+    if (!panel.nameAndP || !panel.width || !panel.height || !panel.resolutionWidth || !panel.resolutionHeight) {
       toast({
         title: "Erro",
         description: "Por favor, preencha todos os campos",
@@ -30,10 +29,29 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
       return;
     }
 
+    // Nome padrão aceitando Pvalor junto: "P3.9 | Nome Personalizado"
+    let norm = panel.nameAndP.trim();
+    let name = norm, pValue = 0;
+    const match = norm.match(/P?(\d+(?:[,.]\d+)?)\s*\|\s*(.*)/i);
+    if (match) {
+      pValue = Number(match[1].replace(",", "."));
+      name = match[2].trim();
+    } else {
+      // Tenta extrair valor P se digitado no começo - ex: "3.9 Painel X"
+      const fallback = norm.match(/^P?(\d+(?:[,.]\d+)?)[ -]*(.*)$/i);
+      if (fallback) {
+        pValue = Number(fallback[1].replace(",", "."));
+        name = fallback[2].trim();
+      } else {
+        name = norm;
+        pValue = 0;
+      }
+    }
+
     const newPanel: LEDPanel = {
       id: Date.now().toString(),
-      name: panel.name,
-      pValue: Number(panel.pValue),
+      name,
+      pValue,
       width: Number(panel.width),
       height: Number(panel.height),
       resolutionWidth: Number(panel.resolutionWidth),
@@ -47,8 +65,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
     });
 
     setPanel({
-      name: "",
-      pValue: "",
+      nameAndP: "",
       width: "",
       height: "",
       resolutionWidth: "",
@@ -58,30 +75,18 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
 
   return (
     <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Cadastro de Painel</h2>
+      <h2 className="text-2xl font-bold mb-4">Cadastro de Placa</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="name">Nome do Painel</Label>
+          <Label htmlFor="nameAndP">Nome da Placa <span className="font-normal text-xs">(ex: P3.9 | Palco Central)</span></Label>
           <Input
-            id="name"
-            value={panel.name}
-            onChange={(e) => setPanel({ ...panel, name: e.target.value })}
-            placeholder="Ex: Painel P3.9"
+            id="nameAndP"
+            value={panel.nameAndP}
+            onChange={(e) => setPanel({ ...panel, nameAndP: e.target.value })}
+            placeholder="Ex: P3.9 | Palco Central"
+            required
           />
         </div>
-        
-        <div>
-          <Label htmlFor="pValue">Valor P</Label>
-          <Input
-            id="pValue"
-            type="number"
-            step="0.1"
-            value={panel.pValue}
-            onChange={(e) => setPanel({ ...panel, pValue: e.target.value })}
-            placeholder="Ex: 3.9"
-          />
-        </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Label htmlFor="width">Largura (mm)</Label>
@@ -93,7 +98,6 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
               placeholder="Ex: 500"
             />
           </div>
-          
           <div>
             <Label htmlFor="height">Altura (mm)</Label>
             <Input
@@ -105,7 +109,6 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
             />
           </div>
         </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Label htmlFor="resWidth">Resolução Largura (px)</Label>
@@ -117,7 +120,6 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
               placeholder="Ex: 128"
             />
           </div>
-          
           <div>
             <Label htmlFor="resHeight">Resolução Altura (px)</Label>
             <Input
@@ -129,8 +131,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
             />
           </div>
         </div>
-
-        <Button type="submit" className="w-full">Cadastrar Painel</Button>
+        <Button type="submit" className="w-full">Cadastrar Placa</Button>
       </form>
     </Card>
   );
