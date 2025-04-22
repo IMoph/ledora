@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import PanelManagement from "@/components/PanelManagement";
 import PanelRegistration from "@/components/PanelRegistration";
-import TutorialDialog from "@/components/TutorialDialog";
 import type { LEDPanel } from "@/types/types";
 import { X } from "lucide-react";
 import * as React from "react";
@@ -31,7 +30,6 @@ const PanelsDialog = ({ panels, onPanelAdded, onPanelDelete }: PanelsDialogProps
           <div className="flex items-center justify-between w-full">
             <DialogTitle>Gerenciamento de Placas</DialogTitle>
             <div className="flex gap-2">
-              <TutorialDialog />
               {/* Close button */}
               <button
                 aria-label="Fechar"

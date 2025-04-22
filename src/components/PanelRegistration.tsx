@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -16,6 +16,27 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
     resolutionWidth: "",
     resolutionHeight: "",
   });
+  
+  const [calculatedPValue, setCalculatedPValue] = useState<number | null>(null);
+
+  // Calculate P value whenever width and resolution width change
+  useEffect(() => {
+    if (panel.width && panel.resolutionWidth) {
+      const width = parseFloat(panel.width);
+      const resWidth = parseFloat(panel.resolutionWidth);
+      
+      if (width > 0 && resWidth > 0) {
+        const quotient = width / resWidth;
+        // Round to 1 decimal place
+        const pValue = Math.round(quotient * 10) / 10;
+        setCalculatedPValue(pValue);
+      } else {
+        setCalculatedPValue(null);
+      }
+    } else {
+      setCalculatedPValue(null);
+    }
+  }, [panel.width, panel.resolutionWidth]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,20 +52,17 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
 
     // Nome padrão aceitando Pvalor junto: "P3.9 | Nome Personalizado"
     let norm = panel.nameAndP.trim();
-    let name = norm, pValue = 0;
+    let name = norm, pValue = calculatedPValue || 0;
     const match = norm.match(/P?(\d+(?:[,.]\d+)?)\s*\|\s*(.*)/i);
     if (match) {
-      pValue = Number(match[1].replace(",", "."));
       name = match[2].trim();
     } else {
       // Tenta extrair valor P se digitado no começo - ex: "3.9 Painel X"
       const fallback = norm.match(/^P?(\d+(?:[,.]\d+)?)[ -]*(.*)$/i);
       if (fallback) {
-        pValue = Number(fallback[1].replace(",", "."));
         name = fallback[2].trim();
       } else {
         name = norm;
-        pValue = 0;
       }
     }
 
@@ -71,6 +89,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
       resolutionWidth: "",
       resolutionHeight: "",
     });
+    setCalculatedPValue(null);
   };
 
   return (
@@ -78,12 +97,12 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
       <h2 className="text-2xl font-bold mb-4">Cadastro de Placa</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="nameAndP">Nome da Placa <span className="font-normal text-xs">(ex: Empresa P3.9)</span></Label>
+          <Label htmlFor="nameAndP">Nome da Placa <span className="font-normal text-xs">(ex: empresa P3.9)</span></Label>
           <Input
             id="nameAndP"
             value={panel.nameAndP}
             onChange={(e) => setPanel({ ...panel, nameAndP: e.target.value })}
-            placeholder="Ex: Empresa P3.9"
+            placeholder="Ex: empresa P3.9"
             required
           />
         </div>
@@ -131,6 +150,16 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
             />
           </div>
         </div>
+        
+        {calculatedPValue !== null && (
+          <div className="p-3 bg-muted rounded-md">
+            <p>Valor P calculado: <span className="font-semibold">P{calculatedPValue.toFixed(1)}</span></p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Calculado como largura ÷ resolução largura = {panel.width} ÷ {panel.resolutionWidth} ≈ {calculatedPValue.toFixed(1)}
+            </p>
+          </div>
+        )}
+        
         <Button type="submit" className="w-full">Cadastrar Placa</Button>
       </form>
     </Card>

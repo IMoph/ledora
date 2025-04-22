@@ -6,24 +6,73 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Calculator as CalculatorIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 import type { LEDPanel, CalculationResult } from "@/types/types";
 import CalculatorPanelSelect from "./CalculatorPanelSelect";
 import CalculatorModeTabs from "./CalculatorModeTabs";
 import CalculatorResult from "./CalculatorResult";
+import CalculationHistory from "./CalculationHistory";
 
 const PIXELS_PER_NETWORK_CABLE = 655360;
 
-const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
+// Function to calculate the greatest common divisor (GCD)
+const gcd = (a: number, b: number): number => {
+  return b === 0 ? a : gcd(b, a % b);
+};
+
+// Function to get the aspect ratio
+const getAspectRatio = (width: number, height: number): string => {
+  const divisor = gcd(width, height);
+  return `${width / divisor}:${height / divisor}`;
+};
+
+const Calculator = ({ 
+  panels, 
+  onCalculationSaved,
+  calculationHistory 
+}: { 
+  panels: LEDPanel[]; 
+  onCalculationSaved: (result: CalculationResult) => void;
+  calculationHistory: CalculationResult[];
+}) => {
   const [selectedPanelId, setSelectedPanelId] = useState("");
   const [dimensions, setDimensions] = useState({ width: "", height: "" });
   const [panelCount, setPanelCount] = useState({ width: "", height: "" });
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [calculationMode, setCalculationMode] = useState<"dimensions" | "panels">("dimensions");
   const isMobile = useIsMobile();
+  const { toast } = useToast();
+
+  const validateDimensions = (width: number, height: number, panel: LEDPanel): boolean => {
+    if (calculationMode !== "dimensions") return true;
+    
+    // For dimensions mode, check if panel dimensions are 500mm or 1000mm
+    if (panel.width !== 500 && panel.width !== 1000) {
+      toast({
+        title: "Dimensão inválida",
+        description: "A placa selecionada deve ter largura de 500mm ou 1000mm",
+        variant: "destructive"
+      });
+      return false;
+    }
+    
+    if (panel.height !== 500 && panel.height !== 1000) {
+      toast({
+        title: "Dimensão inválida",
+        description: "A placa selecionada deve ter altura de 500mm ou 1000mm",
+        variant: "destructive"
+      });
+      return false;
+    }
+    
+    return true;
+  };
 
   const calculateByDimensions = () => {
     const panel = panels.find((p) => p.id === selectedPanelId);
     if (!panel || !dimensions.width || !dimensions.height) return;
+    
+    if (!validateDimensions(Number(dimensions.width), Number(dimensions.height), panel)) return;
 
     const widthInMm = Number(dimensions.width) * 1000;
     const heightInMm = Number(dimensions.height) * 1000;
@@ -41,16 +90,26 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
     const totalAreaInSquareMeters = finalWidthInMeters * finalHeightInMeters;
 
     const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
+    const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
 
-    setResult({
+    const calculationResult = {
       panelsNeeded: totalPanels,
+      panelsWide,
+      panelsHigh,
       finalResolutionWidth,
       finalResolutionHeight,
+      aspectRatio,
       networkCablesNeeded,
       widthInMeters: finalWidthInMeters,
       heightInMeters: finalHeightInMeters,
       areaInSquareMeters: totalAreaInSquareMeters,
-    });
+      timestamp: new Date().toISOString(),
+      panelName: panel.name,
+      pValue: panel.pValue,
+    };
+
+    setResult(calculationResult);
+    onCalculationSaved(calculationResult);
   };
 
   const calculateByPanelCount = () => {
@@ -70,16 +129,26 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
     const totalAreaInSquareMeters = finalWidthInMeters * finalHeightInMeters;
 
     const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
+    const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
 
-    setResult({
+    const calculationResult = {
       panelsNeeded: totalPanels,
+      panelsWide,
+      panelsHigh,
       finalResolutionWidth,
       finalResolutionHeight,
+      aspectRatio,
       networkCablesNeeded,
       widthInMeters: finalWidthInMeters,
       heightInMeters: finalHeightInMeters,
       areaInSquareMeters: totalAreaInSquareMeters,
-    });
+      timestamp: new Date().toISOString(),
+      panelName: panel.name,
+      pValue: panel.pValue,
+    };
+
+    setResult(calculationResult);
+    onCalculationSaved(calculationResult);
   };
 
   return (
@@ -167,6 +236,10 @@ const Calculator = ({ panels }: { panels: LEDPanel[] }) => {
         </Button>
 
         {result && <CalculatorResult result={result} />}
+        
+        {calculationHistory.length > 0 && (
+          <CalculationHistory history={calculationHistory} />
+        )}
       </div>
     </Card>
   );

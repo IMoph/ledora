@@ -11,11 +11,16 @@ export interface LEDPanel {
 
 export interface CalculationResult {
   panelsNeeded: number;
+  panelsWide: number;
+  panelsHigh: number;
   finalResolutionWidth: number;
   finalResolutionHeight: number;
+  aspectRatio: string;
   networkCablesNeeded: number;
   widthInMeters: number;
   heightInMeters: number;
   areaInSquareMeters: number;
+  timestamp: string;
+  panelName: string;
+  pValue: number;
 }
-

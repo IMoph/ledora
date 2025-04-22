@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Calculator from "@/components/Calculator";
 import PanelsDialog from "@/components/PanelsDialog";
+import TutorialDialog from "@/components/TutorialDialog";
 import { useIsMobile } from "@/hooks/use-mobile";
-import type { LEDPanel } from "@/types/types";
+import type { LEDPanel, CalculationResult } from "@/types/types";
 
 const Index = () => {
   const { theme, setTheme } = useTheme();
@@ -16,9 +17,18 @@ const Index = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [calculationHistory, setCalculationHistory] = useState<CalculationResult[]>(() => {
+    const saved = localStorage.getItem("calculationHistory");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   useEffect(() => {
     localStorage.setItem("ledPanels", JSON.stringify(panels));
   }, [panels]);
+
+  useEffect(() => {
+    localStorage.setItem("calculationHistory", JSON.stringify(calculationHistory));
+  }, [calculationHistory]);
 
   const handlePanelAdded = (panel: LEDPanel) => {
     setPanels([...panels, panel]);
@@ -26,6 +36,13 @@ const Index = () => {
 
   const handlePanelDelete = (id: string) => {
     setPanels(panels.filter((panel) => panel.id !== id));
+  };
+
+  const handleCalculationSaved = (result: CalculationResult) => {
+    setCalculationHistory(prev => {
+      const newHistory = [result, ...prev.slice(0, 4)]; // Keep only the last 5 results
+      return newHistory;
+    });
   };
 
   return (
@@ -36,6 +53,7 @@ const Index = () => {
             {isMobile ? "LED Calc" : "Calculadora de Painéis LED"}
           </h1>
           <div className="flex gap-2">
+            <TutorialDialog />
             <PanelsDialog 
               panels={panels}
               onPanelAdded={handlePanelAdded}
@@ -55,7 +73,7 @@ const Index = () => {
           </div>
         </div>
         
-        <Calculator panels={panels} />
+        <Calculator panels={panels} onCalculationSaved={handleCalculationSaved} calculationHistory={calculationHistory} />
       </div>
     </div>
   );
