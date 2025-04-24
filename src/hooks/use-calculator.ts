@@ -13,6 +13,11 @@ const getAspectRatio = (width: number, height: number): string => {
   return `${width / divisor}:${height / divisor}`;
 };
 
+// Formula for kVA calculation
+const calculateKVA = (watts: number): number => {
+  return watts / (1000 * 0.8);
+};
+
 interface UseCalculatorProps {
   panels: LEDPanel[];
   selectedPanelId: string;
@@ -74,7 +79,7 @@ export const useCalculator = ({
     const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
     const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
 
-    const calculationResult = {
+    const calculationResult: CalculationResult = {
       panelsNeeded: totalPanels,
       panelsWide,
       panelsHigh,
@@ -89,6 +94,18 @@ export const useCalculator = ({
       panelName: panel.name,
       pValue: panel.pValue,
     };
+
+    // Add weight calculation if panel has weight
+    if (panel.weight) {
+      calculationResult.totalWeight = totalPanels * panel.weight;
+    }
+
+    // Add watts and kVA calculations if panel has watts
+    if (panel.watts) {
+      const totalWatts = totalPanels * panel.watts;
+      calculationResult.totalWatts = totalWatts;
+      calculationResult.totalKVA = calculateKVA(totalWatts);
+    }
 
     setResult(calculationResult);
     onCalculationSaved(calculationResult);
@@ -113,7 +130,7 @@ export const useCalculator = ({
     const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
     const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
 
-    const calculationResult = {
+    const calculationResult: CalculationResult = {
       panelsNeeded: totalPanels,
       panelsWide,
       panelsHigh,
@@ -128,6 +145,18 @@ export const useCalculator = ({
       panelName: panel.name,
       pValue: panel.pValue,
     };
+
+    // Add weight calculation if panel has weight
+    if (panel.weight) {
+      calculationResult.totalWeight = totalPanels * panel.weight;
+    }
+
+    // Add watts and kVA calculations if panel has watts
+    if (panel.watts) {
+      const totalWatts = totalPanels * panel.watts;
+      calculationResult.totalWatts = totalWatts;
+      calculationResult.totalKVA = calculateKVA(totalWatts);
+    }
 
     setResult(calculationResult);
     onCalculationSaved(calculationResult);

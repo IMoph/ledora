@@ -1,8 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
 import Calculator from "@/components/Calculator";
 import PanelsDialog from "@/components/PanelsDialog";
 import TutorialDialog from "@/components/TutorialDialog";
@@ -10,7 +8,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import type { LEDPanel, CalculationResult } from "@/types/types";
 
 const Index = () => {
-  const { theme, setTheme } = useTheme();
   const isMobile = useIsMobile();
   const [panels, setPanels] = useState<LEDPanel[]>(() => {
     const saved = localStorage.getItem("ledPanels");
@@ -59,18 +56,6 @@ const Index = () => {
               onPanelAdded={handlePanelAdded}
               onPanelDelete={handlePanelDelete}
             />
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="bg-purple-900/50 border-purple-500/30 text-white hover:bg-purple-800/60"
-            >
-              {theme === 'dark' ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </Button>
           </div>
         </div>
         

@@ -7,6 +7,8 @@ export interface LEDPanel {
   height: number;
   resolutionWidth: number;
   resolutionHeight: number;
+  watts?: number;
+  weight?: number;
 }
 
 export interface CalculationResult {
@@ -23,4 +25,7 @@ export interface CalculationResult {
   timestamp: string;
   panelName: string;
   pValue: number;
+  totalWeight?: number;
+  totalWatts?: number;
+  totalKVA?: number;
 }

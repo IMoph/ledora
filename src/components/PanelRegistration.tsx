@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,8 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
     height: "",
     resolutionWidth: "",
     resolutionHeight: "",
+    watts: "",
+    weight: "",
   });
   
   const [calculatedPValue, setCalculatedPValue] = useState<number | null>(null);
@@ -41,7 +44,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
     if (!panel.nameAndP || !panel.width || !panel.height || !panel.resolutionWidth || !panel.resolutionHeight) {
       toast({
         title: "Erro",
-        description: "Por favor, preencha todos os campos",
+        description: "Por favor, preencha todos os campos obrigatórios",
         variant: "destructive",
       });
       return;
@@ -73,6 +76,15 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
       resolutionHeight: Number(panel.resolutionHeight),
     };
 
+    // Add optional fields if provided
+    if (panel.watts) {
+      newPanel.watts = Number(panel.watts);
+    }
+
+    if (panel.weight) {
+      newPanel.weight = Number(panel.weight);
+    }
+
     onPanelAdded(newPanel);
     toast({
       title: "Sucesso",
@@ -85,6 +97,8 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
       height: "",
       resolutionWidth: "",
       resolutionHeight: "",
+      watts: "",
+      weight: "",
     });
     setCalculatedPValue(null);
   };
@@ -112,6 +126,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
               value={panel.width}
               onChange={(e) => setPanel({ ...panel, width: e.target.value })}
               placeholder="Ex: 500"
+              required
             />
           </div>
           <div>
@@ -122,6 +137,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
               value={panel.height}
               onChange={(e) => setPanel({ ...panel, height: e.target.value })}
               placeholder="Ex: 500"
+              required
             />
           </div>
         </div>
@@ -134,6 +150,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
               value={panel.resolutionWidth}
               onChange={(e) => setPanel({ ...panel, resolutionWidth: e.target.value })}
               placeholder="Ex: 128"
+              required
             />
           </div>
           <div>
@@ -144,6 +161,31 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
               value={panel.resolutionHeight}
               onChange={(e) => setPanel({ ...panel, resolutionHeight: e.target.value })}
               placeholder="Ex: 128"
+              required
+            />
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="watts">Watts (opcional)</Label>
+            <Input
+              id="watts"
+              type="number"
+              value={panel.watts}
+              onChange={(e) => setPanel({ ...panel, watts: e.target.value })}
+              placeholder="Ex: 150"
+            />
+          </div>
+          <div>
+            <Label htmlFor="weight">Peso (kg) (opcional)</Label>
+            <Input
+              id="weight"
+              type="number"
+              step="0.1"
+              value={panel.weight}
+              onChange={(e) => setPanel({ ...panel, weight: e.target.value })}
+              placeholder="Ex: 7.5"
             />
           </div>
         </div>

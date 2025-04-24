@@ -12,6 +12,15 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
       <p>Dimensões Finais: <span className="font-bold">{result.widthInMeters.toFixed(2)}x{result.heightInMeters.toFixed(2)}m</span></p>
       <p>Área Total: <span className="font-bold">{result.areaInSquareMeters.toFixed(2)}m²</span></p>
       <p>Cabos de Sinal RJ45: <span className="font-bold">{result.networkCablesNeeded}</span></p>
+      {result.totalWeight && (
+        <p>Peso Total: <span className="font-bold">{result.totalWeight.toFixed(2)}kg</span></p>
+      )}
+      {result.totalWatts && (
+        <p>Potência Total: <span className="font-bold">{result.totalWatts.toFixed(2)}W</span></p>
+      )}
+      {result.totalKVA && (
+        <p>kVA Total: <span className="font-bold">{result.totalKVA.toFixed(2)}kVA</span></p>
+      )}
     </div>
   </div>
 );

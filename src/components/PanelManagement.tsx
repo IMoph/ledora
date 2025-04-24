@@ -37,11 +37,18 @@ const PanelManagement = ({ panels, onPanelDelete }: PanelManagementProps) => {
                 <div>
                   <h3 className="font-medium">{panel.name}</h3>
                   <p className="text-sm text-muted-foreground">
-                    P{panel.pValue} - {panel.width}x{panel.height}mm
+                    P{panel.pValue.toFixed(3)} - {panel.width}x{panel.height}mm
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Resolução: {panel.resolutionWidth}x{panel.resolutionHeight}px
                   </p>
+                  {(panel.watts || panel.weight) && (
+                    <p className="text-sm text-muted-foreground">
+                      {panel.watts ? `${panel.watts}W` : ""} 
+                      {panel.watts && panel.weight ? " | " : ""}
+                      {panel.weight ? `${panel.weight}kg` : ""}
+                    </p>
+                  )}
                 </div>
                 <Button
                   variant="destructive"
