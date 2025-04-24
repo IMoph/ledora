@@ -46,10 +46,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-3 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a0b2e] to-[#2f1c4a] p-3 sm:p-6">
       <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
         <div className="flex justify-between items-center mb-4 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold">
+          <h1 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">
             {isMobile ? "LED Calc" : "Calculadora de Painéis LED"}
           </h1>
           <div className="flex gap-2">
@@ -63,6 +63,7 @@ const Index = () => {
               variant="outline"
               size="icon"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="bg-purple-900/50 border-purple-500/30 text-white hover:bg-purple-800/60"
             >
               {theme === 'dark' ? (
                 <Sun className="h-4 w-4" />

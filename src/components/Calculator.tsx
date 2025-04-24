@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,12 +14,10 @@ import CalculationHistory from "./CalculationHistory";
 
 const PIXELS_PER_NETWORK_CABLE = 655360;
 
-// Function to calculate the greatest common divisor (GCD)
 const gcd = (a: number, b: number): number => {
   return b === 0 ? a : gcd(b, a % b);
 };
 
-// Function to get the aspect ratio
 const getAspectRatio = (width: number, height: number): string => {
   const divisor = gcd(width, height);
   return `${width / divisor}:${height / divisor}`;
@@ -46,7 +43,6 @@ const Calculator = ({
   const validateDimensions = (width: number, height: number, panel: LEDPanel): boolean => {
     if (calculationMode !== "dimensions") return true;
     
-    // For dimensions mode, check if panel dimensions are 500mm or 1000mm
     if (panel.width !== 500 && panel.width !== 1000) {
       toast({
         title: "Dimensão inválida",
@@ -152,8 +148,8 @@ const Calculator = ({
   };
 
   return (
-    <Card className="p-4 md:p-6">
-      <h2 className="text-xl md:text-2xl font-bold mb-4">Calculadora de Placas LED</h2>
+    <Card className="p-4 md:p-6 bg-[#1a0b2e]/95 backdrop-blur-lg border border-purple-500/20">
+      <h2 className="text-xl md:text-2xl font-bold mb-4 text-white">Calculadora de Placas LED</h2>
       <div className="space-y-4">
         <CalculatorPanelSelect
           panels={panels}
@@ -170,7 +166,7 @@ const Calculator = ({
         {calculationMode === "dimensions" ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="width">Largura Desejada (metros)</Label>
+              <Label htmlFor="width" className="text-white/90">Largura Desejada (metros)</Label>
               <Input
                 id="width"
                 type="number"
@@ -178,11 +174,11 @@ const Calculator = ({
                 value={dimensions.width}
                 onChange={(e) => setDimensions({ ...dimensions, width: e.target.value })}
                 placeholder="Ex: 5"
-                className="mt-1"
+                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
               />
             </div>
             <div>
-              <Label htmlFor="height">Altura Desejada (metros)</Label>
+              <Label htmlFor="height" className="text-white/90">Altura Desejada (metros)</Label>
               <Input
                 id="height"
                 type="number"
@@ -190,32 +186,32 @@ const Calculator = ({
                 value={dimensions.height}
                 onChange={(e) => setDimensions({ ...dimensions, height: e.target.value })}
                 placeholder="Ex: 2.5"
-                className="mt-1"
+                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
               />
             </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="panelsWidth">Quantidade de Placas (Largura)</Label>
+              <Label htmlFor="panelsWidth" className="text-white/90">Quantidade de Placas (Largura)</Label>
               <Input
                 id="panelsWidth"
                 type="number"
                 value={panelCount.width}
                 onChange={(e) => setPanelCount({ ...panelCount, width: e.target.value })}
                 placeholder="Ex: 4"
-                className="mt-1"
+                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
               />
             </div>
             <div>
-              <Label htmlFor="panelsHeight">Quantidade de Placas (Altura)</Label>
+              <Label htmlFor="panelsHeight" className="text-white/90">Quantidade de Placas (Altura)</Label>
               <Input
                 id="panelsHeight"
                 type="number"
                 value={panelCount.height}
                 onChange={(e) => setPanelCount({ ...panelCount, height: e.target.value })}
                 placeholder="Ex: 3"
-                className="mt-1"
+                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
               />
             </div>
           </div>
@@ -223,7 +219,7 @@ const Calculator = ({
 
         <Button 
           onClick={calculationMode === "dimensions" ? calculateByDimensions : calculateByPanelCount}
-          className="w-full"
+          className="w-full bg-purple-600 hover:bg-purple-700 text-white"
           disabled={
             !selectedPanelId ||
             (calculationMode === "dimensions"
