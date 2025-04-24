@@ -1,27 +1,16 @@
+
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Calculator as CalculatorIcon } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import type { LEDPanel, CalculationResult } from "@/types/types";
 import CalculatorPanelSelect from "./CalculatorPanelSelect";
 import CalculatorModeTabs from "./CalculatorModeTabs";
+import CalculatorForm from "./CalculatorForm";
 import CalculatorResult from "./CalculatorResult";
 import CalculationHistory from "./CalculationHistory";
-
-const PIXELS_PER_NETWORK_CABLE = 655360;
-
-const gcd = (a: number, b: number): number => {
-  return b === 0 ? a : gcd(b, a % b);
-};
-
-const getAspectRatio = (width: number, height: number): string => {
-  const divisor = gcd(width, height);
-  return `${width / divisor}:${height / divisor}`;
-};
+import { useCalculator } from "@/hooks/use-calculator";
 
 const Calculator = ({ 
   panels, 
@@ -33,119 +22,16 @@ const Calculator = ({
   calculationHistory: CalculationResult[];
 }) => {
   const [selectedPanelId, setSelectedPanelId] = useState("");
-  const [dimensions, setDimensions] = useState({ width: "", height: "" });
-  const [panelCount, setPanelCount] = useState({ width: "", height: "" });
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [calculationMode, setCalculationMode] = useState<"dimensions" | "panels">("dimensions");
-  const isMobile = useIsMobile();
   const { toast } = useToast();
-
-  const validateDimensions = (width: number, height: number, panel: LEDPanel): boolean => {
-    if (calculationMode !== "dimensions") return true;
-    
-    if (panel.width !== 500 && panel.width !== 1000) {
-      toast({
-        title: "Dimensão inválida",
-        description: "A placa selecionada deve ter largura de 500mm ou 1000mm",
-        variant: "destructive"
-      });
-      return false;
-    }
-    
-    if (panel.height !== 500 && panel.height !== 1000) {
-      toast({
-        title: "Dimensão inválida",
-        description: "A placa selecionada deve ter altura de 500mm ou 1000mm",
-        variant: "destructive"
-      });
-      return false;
-    }
-    
-    return true;
-  };
-
-  const calculateByDimensions = () => {
-    const panel = panels.find((p) => p.id === selectedPanelId);
-    if (!panel || !dimensions.width || !dimensions.height) return;
-    
-    if (!validateDimensions(Number(dimensions.width), Number(dimensions.height), panel)) return;
-
-    const widthInMm = Number(dimensions.width) * 1000;
-    const heightInMm = Number(dimensions.height) * 1000;
-
-    const panelsWide = Math.ceil(widthInMm / panel.width);
-    const panelsHigh = Math.ceil(heightInMm / panel.height);
-    const totalPanels = panelsWide * panelsHigh;
-
-    const finalResolutionWidth = panelsWide * panel.resolutionWidth;
-    const finalResolutionHeight = panelsHigh * panel.resolutionHeight;
-    const totalPixels = finalResolutionWidth * finalResolutionHeight;
-
-    const finalWidthInMeters = (panelsWide * panel.width) / 1000;
-    const finalHeightInMeters = (panelsHigh * panel.height) / 1000;
-    const totalAreaInSquareMeters = finalWidthInMeters * finalHeightInMeters;
-
-    const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
-    const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
-
-    const calculationResult = {
-      panelsNeeded: totalPanels,
-      panelsWide,
-      panelsHigh,
-      finalResolutionWidth,
-      finalResolutionHeight,
-      aspectRatio,
-      networkCablesNeeded,
-      widthInMeters: finalWidthInMeters,
-      heightInMeters: finalHeightInMeters,
-      areaInSquareMeters: totalAreaInSquareMeters,
-      timestamp: new Date().toISOString(),
-      panelName: panel.name,
-      pValue: panel.pValue,
-    };
-
-    setResult(calculationResult);
-    onCalculationSaved(calculationResult);
-  };
-
-  const calculateByPanelCount = () => {
-    const panel = panels.find((p) => p.id === selectedPanelId);
-    if (!panel || !panelCount.width || !panelCount.height) return;
-
-    const panelsWide = Number(panelCount.width);
-    const panelsHigh = Number(panelCount.height);
-    const totalPanels = panelsWide * panelsHigh;
-
-    const finalResolutionWidth = panelsWide * panel.resolutionWidth;
-    const finalResolutionHeight = panelsHigh * panel.resolutionHeight;
-    const totalPixels = finalResolutionWidth * finalResolutionHeight;
-
-    const finalWidthInMeters = (panelsWide * panel.width) / 1000;
-    const finalHeightInMeters = (panelsHigh * panel.height) / 1000;
-    const totalAreaInSquareMeters = finalWidthInMeters * finalHeightInMeters;
-
-    const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
-    const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
-
-    const calculationResult = {
-      panelsNeeded: totalPanels,
-      panelsWide,
-      panelsHigh,
-      finalResolutionWidth,
-      finalResolutionHeight,
-      aspectRatio,
-      networkCablesNeeded,
-      widthInMeters: finalWidthInMeters,
-      heightInMeters: finalHeightInMeters,
-      areaInSquareMeters: totalAreaInSquareMeters,
-      timestamp: new Date().toISOString(),
-      panelName: panel.name,
-      pValue: panel.pValue,
-    };
-
-    setResult(calculationResult);
-    onCalculationSaved(calculationResult);
-  };
+  const { calculateByDimensions, calculateByPanelCount } = useCalculator({ 
+    panels,
+    selectedPanelId,
+    onCalculationSaved,
+    setResult,
+    toast
+  });
 
   return (
     <Card className="p-4 md:p-6 bg-[#1a0b2e]/95 backdrop-blur-lg border border-purple-500/20">
@@ -158,78 +44,15 @@ const Calculator = ({
         />
 
         <CalculatorModeTabs
-          isMobile={isMobile}
           calculationMode={calculationMode}
           setCalculationMode={setCalculationMode}
         />
 
-        {calculationMode === "dimensions" ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="width" className="text-white/90">Largura Desejada (metros)</Label>
-              <Input
-                id="width"
-                type="number"
-                step="0.1"
-                value={dimensions.width}
-                onChange={(e) => setDimensions({ ...dimensions, width: e.target.value })}
-                placeholder="Ex: 5"
-                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
-              />
-            </div>
-            <div>
-              <Label htmlFor="height" className="text-white/90">Altura Desejada (metros)</Label>
-              <Input
-                id="height"
-                type="number"
-                step="0.1"
-                value={dimensions.height}
-                onChange={(e) => setDimensions({ ...dimensions, height: e.target.value })}
-                placeholder="Ex: 2.5"
-                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="panelsWidth" className="text-white/90">Quantidade de Placas (Largura)</Label>
-              <Input
-                id="panelsWidth"
-                type="number"
-                value={panelCount.width}
-                onChange={(e) => setPanelCount({ ...panelCount, width: e.target.value })}
-                placeholder="Ex: 4"
-                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
-              />
-            </div>
-            <div>
-              <Label htmlFor="panelsHeight" className="text-white/90">Quantidade de Placas (Altura)</Label>
-              <Input
-                id="panelsHeight"
-                type="number"
-                value={panelCount.height}
-                onChange={(e) => setPanelCount({ ...panelCount, height: e.target.value })}
-                placeholder="Ex: 3"
-                className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
-              />
-            </div>
-          </div>
-        )}
-
-        <Button 
-          onClick={calculationMode === "dimensions" ? calculateByDimensions : calculateByPanelCount}
-          className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-          disabled={
-            !selectedPanelId ||
-            (calculationMode === "dimensions"
-              ? (!dimensions.width || !dimensions.height)
-              : (!panelCount.width || !panelCount.height))
-          }
-        >
-          <CalculatorIcon className="mr-2 h-4 w-4" />
-          Calcular
-        </Button>
+        <CalculatorForm
+          calculationMode={calculationMode}
+          onCalculate={calculationMode === "dimensions" ? calculateByDimensions : calculateByPanelCount}
+          selectedPanelId={selectedPanelId}
+        />
 
         {result && <CalculatorResult result={result} />}
         
