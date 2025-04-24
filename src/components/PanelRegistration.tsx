@@ -155,7 +155,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
           <div className="p-3 bg-muted rounded-md">
             <p>Valor P calculado: <span className="font-semibold">P{calculatedPValue.toFixed(1)}</span></p>
             <p className="text-xs text-muted-foreground mt-1">
-              Calculado como largura ÷ resolução largura = {panel.width} ÷ {panel.resolutionWidth} ≈ {calculatedPValue.toFixed(1)}
+              Calculado como largura ÷ resolução largura = {panel.width} ÷ {panel.resolutionWidth} = {calculatedPValue.toFixed(1)}
             </p>
           </div>
         )}
