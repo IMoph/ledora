@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,9 +25,7 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
       const resWidth = parseFloat(panel.resolutionWidth);
       
       if (width > 0 && resWidth > 0) {
-        const quotient = width / resWidth;
-        // Round to 1 decimal place
-        const pValue = Math.round(quotient * 10) / 10;
+        const pValue = width / resWidth;
         setCalculatedPValue(pValue);
       } else {
         setCalculatedPValue(null);
@@ -153,9 +150,9 @@ const PanelRegistration = ({ onPanelAdded }: { onPanelAdded: (panel: LEDPanel) =
         
         {calculatedPValue !== null && (
           <div className="p-3 bg-muted rounded-md">
-            <p>Valor P calculado: <span className="font-semibold">P{calculatedPValue.toFixed(1)}</span></p>
+            <p>Valor P calculado: <span className="font-semibold">P{calculatedPValue.toFixed(3)}</span></p>
             <p className="text-xs text-muted-foreground mt-1">
-              Calculado como largura ÷ resolução largura = {panel.width} ÷ {panel.resolutionWidth} = {calculatedPValue.toFixed(1)}
+              Calculado como largura ÷ resolução largura = {panel.width} ÷ {panel.resolutionWidth} = {calculatedPValue.toFixed(3)}
             </p>
           </div>
         )}
