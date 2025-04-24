@@ -1,6 +1,6 @@
 
 import type { LEDPanel, CalculationResult } from "@/types/types";
-import { type Toast } from "@/hooks/use-toast";
+import { type toast } from "@/hooks/use-toast";
 
 const PIXELS_PER_NETWORK_CABLE = 655360;
 
@@ -18,7 +18,7 @@ interface UseCalculatorProps {
   selectedPanelId: string;
   onCalculationSaved: (result: CalculationResult) => void;
   setResult: (result: CalculationResult) => void;
-  toast: Toast;
+  toast: typeof toast;
 }
 
 export const useCalculator = ({ 
