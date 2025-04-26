@@ -15,21 +15,29 @@ const CalculatorModeTabs = ({
   const isMobile = useIsMobile();
   
   return (
-    <div className={`flex flex-col ${!isMobile ? 'sm:flex-row' : ''} gap-2 sm:gap-4`}>
+    <div className="bg-gray-100 p-1 rounded-lg flex">
       <Button
-        variant={calculationMode === "dimensions" ? "default" : "outline"}
+        variant="ghost"
         onClick={() => setCalculationMode("dimensions")}
-        className="flex-1"
+        className={`flex-1 flex items-center justify-center gap-2 rounded-md transition-all ${
+          calculationMode === "dimensions" 
+            ? "bg-white shadow-sm text-primary" 
+            : "text-gray-600 hover:text-primary"
+        }`}
       >
-        <Ruler className="mr-2 h-4 w-4" />
+        <Ruler className="h-4 w-4" />
         {isMobile ? "Por Dimensões" : "Calcular por Dimensões"}
       </Button>
       <Button
-        variant={calculationMode === "panels" ? "default" : "outline"}
+        variant="ghost"
         onClick={() => setCalculationMode("panels")}
-        className="flex-1"
+        className={`flex-1 flex items-center justify-center gap-2 rounded-md transition-all ${
+          calculationMode === "panels" 
+            ? "bg-white shadow-sm text-primary" 
+            : "text-gray-600 hover:text-primary"
+        }`}
       >
-        <Layout className="mr-2 h-4 w-4" />
+        <Layout className="h-4 w-4" />
         {isMobile ? "Por Quantidade" : "Calcular por Quantidade"}
       </Button>
     </div>

@@ -34,9 +34,15 @@ const Calculator = ({
   });
 
   return (
-    <Card className="p-4 md:p-6 bg-[#1a0b2e]/95 backdrop-blur-lg border border-purple-500/20">
-      <h2 className="text-xl md:text-2xl font-bold mb-4 text-white">Calculadora de Placas LED</h2>
-      <div className="space-y-4">
+    <Card className="p-4 md:p-6 bg-white/90 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl animate-scale-in hover:border-primary/20 transition-colors duration-300">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <CalculatorIcon className="h-5 w-5 text-primary" />
+        </div>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800">Calculadora de Placas LED</h2>
+      </div>
+      
+      <div className="space-y-6">
         <CalculatorPanelSelect
           panels={panels}
           selectedPanelId={selectedPanelId}
@@ -48,16 +54,24 @@ const Calculator = ({
           setCalculationMode={setCalculationMode}
         />
 
-        <CalculatorForm
-          calculationMode={calculationMode}
-          onCalculate={calculationMode === "dimensions" ? calculateByDimensions : calculateByPanelCount}
-          selectedPanelId={selectedPanelId}
-        />
+        <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 animate-fade-in">
+          <CalculatorForm
+            calculationMode={calculationMode}
+            onCalculate={calculationMode === "dimensions" ? calculateByDimensions : calculateByPanelCount}
+            selectedPanelId={selectedPanelId}
+          />
+        </div>
 
-        {result && <CalculatorResult result={result} />}
+        {result && (
+          <div className="animate-fade-in">
+            <CalculatorResult result={result} />
+          </div>
+        )}
         
         {calculationHistory.length > 0 && (
-          <CalculationHistory history={calculationHistory} />
+          <div className="animate-fade-in">
+            <CalculationHistory history={calculationHistory} />
+          </div>
         )}
       </div>
     </Card>

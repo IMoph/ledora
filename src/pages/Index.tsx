@@ -4,11 +4,15 @@ import { Button } from "@/components/ui/button";
 import Calculator from "@/components/Calculator";
 import PanelsDialog from "@/components/PanelsDialog";
 import TutorialDialog from "@/components/TutorialDialog";
+import Sidebar from "@/components/Sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { LEDPanel, CalculationResult } from "@/types/types";
 
 const Index = () => {
   const isMobile = useIsMobile();
+  const [panelsDialogOpen, setPanelsDialogOpen] = useState(false);
+  const [tutorialDialogOpen, setTutorialDialogOpen] = useState(false);
+  
   const [panels, setPanels] = useState<LEDPanel[]>(() => {
     const saved = localStorage.getItem("ledPanels");
     return saved ? JSON.parse(saved) : [];
@@ -42,25 +46,81 @@ const Index = () => {
     });
   };
 
+  const openPanelsDialog = () => {
+    setPanelsDialogOpen(true);
+  };
+  
+  const closePanelsDialog = () => {
+    setPanelsDialogOpen(false);
+  };
+  
+  const openTutorialDialog = () => {
+    setTutorialDialogOpen(true);
+  };
+  
+  const closeTutorialDialog = () => {
+    setTutorialDialogOpen(false);
+  };
+
+  const mainPadding = isMobile ? "pt-4" : "pl-20";
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a0b2e] to-[#2f1c4a] p-3 sm:p-6">
-      <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
-        <div className="flex justify-between items-center mb-4 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">
-            {isMobile ? "LED Calc" : "Calculadora de Painéis LED"}
-          </h1>
-          <div className="flex gap-2">
-            <TutorialDialog />
-            <PanelsDialog 
-              panels={panels}
-              onPanelAdded={handlePanelAdded}
-              onPanelDelete={handlePanelDelete}
+    <div className="min-h-screen dashboard-gradient">
+      <Sidebar 
+        onPanelsClick={openPanelsDialog}
+        onTutorialClick={openTutorialDialog}
+      />
+      
+      <div className={`min-h-screen ${mainPadding} p-3 sm:p-6 transition-all duration-300`}>
+        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+          <header className="flex justify-between items-center mb-4 sm:mb-8 animate-fade-in">
+            <h1 className="text-2xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">
+              {isMobile ? "LED Calc" : "Calculadora de Painéis LED"}
+            </h1>
+            
+            {!isMobile && (
+              <div className="flex gap-2">
+                <TutorialDialog
+                  open={tutorialDialogOpen}
+                  onOpenChange={setTutorialDialogOpen}
+                />
+                <PanelsDialog 
+                  open={panelsDialogOpen}
+                  onOpenChange={setPanelsDialogOpen}
+                  panels={panels}
+                  onPanelAdded={handlePanelAdded}
+                  onPanelDelete={handlePanelDelete}
+                />
+              </div>
+            )}
+          </header>
+          
+          <main className="animate-scale-in">
+            <Calculator 
+              panels={panels} 
+              onCalculationSaved={handleCalculationSaved} 
+              calculationHistory={calculationHistory} 
             />
-          </div>
+          </main>
         </div>
-        
-        <Calculator panels={panels} onCalculationSaved={handleCalculationSaved} calculationHistory={calculationHistory} />
       </div>
+      
+      {/* Dialogs for mobile - we control them via state instead of self-contained */}
+      {isMobile && (
+        <>
+          <TutorialDialog
+            open={tutorialDialogOpen}
+            onOpenChange={setTutorialDialogOpen}
+          />
+          <PanelsDialog 
+            open={panelsDialogOpen}
+            onOpenChange={setPanelsDialogOpen}
+            panels={panels}
+            onPanelAdded={handlePanelAdded}
+            onPanelDelete={handlePanelDelete}
+          />
+        </>
+      )}
     </div>
   );
 };
