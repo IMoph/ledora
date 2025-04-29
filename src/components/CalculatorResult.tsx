@@ -1,6 +1,6 @@
 
 import type { CalculationResult } from "@/types/types";
-import { Layout, ArrowDown, ArrowRight, Weight, Zap } from "lucide-react";
+import { Layout, ArrowDown, X, Weight, Zap } from "lucide-react";
 
 const CalculatorResult = ({ result }: { result: CalculationResult }) => (
   <div className="mt-4 sm:mt-6 p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-primary/10 shadow-sm space-y-4">
@@ -27,7 +27,7 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
           <span className="text-sm font-medium text-gray-500">Distribuição</span>
           <div className="flex items-center gap-1">
             <span className="font-semibold text-gray-900">{result.panelsWide}</span>
-            <ArrowRight className="h-3.5 w-3.5 text-gray-500" />
+            <X className="h-3.5 w-3.5 text-gray-500" />
             <span className="font-semibold text-gray-900">{result.panelsHigh}</span>
             <span className="text-gray-500 ml-1">(LxA)</span>
           </div>
@@ -37,7 +37,7 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
           <span className="text-sm font-medium text-gray-500">Resolução Final</span>
           <div className="flex items-center gap-1">
             <span className="font-semibold text-gray-900">{result.finalResolutionWidth}</span>
-            <ArrowRight className="h-3.5 w-3.5 text-gray-500" />
+            <X className="h-3.5 w-3.5 text-gray-500" />
             <span className="font-semibold text-gray-900">{result.finalResolutionHeight}</span>
             <span className="text-gray-500 ml-1">pixels</span>
           </div>
@@ -54,7 +54,7 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
           <span className="text-sm font-medium text-gray-500">Dimensões Finais</span>
           <div className="flex items-center gap-1">
             <span className="font-semibold text-gray-900">{result.widthInMeters.toFixed(2)}</span>
-            <ArrowRight className="h-3.5 w-3.5 text-gray-500" />
+            <X className="h-3.5 w-3.5 text-gray-500" />
             <span className="font-semibold text-gray-900">{result.heightInMeters.toFixed(2)}</span>
             <span className="text-gray-500 ml-1">metros</span>
           </div>
