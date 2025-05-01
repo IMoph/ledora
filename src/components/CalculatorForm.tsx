@@ -36,7 +36,7 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
               value={dimensions.width}
               onChange={(e) => setDimensions({ ...dimensions, width: e.target.value })}
               placeholder="Ex: 5"
-              className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
+              className="mt-1 bg-background/20 border-primary/30 text-foreground"
             />
           </div>
           <div>
@@ -48,13 +48,13 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
               value={dimensions.height}
               onChange={(e) => setDimensions({ ...dimensions, height: e.target.value })}
               placeholder="Ex: 2.5"
-              className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
+              className="mt-1 bg-background/20 border-primary/30 text-foreground"
             />
           </div>
         </div>
         <Button 
           onClick={handleCalculate}
-          className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white"
+          className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground"
           disabled={!selectedPanelId || !dimensions.width || !dimensions.height}
         >
           <CalculatorIcon className="mr-2 h-4 w-4" />
@@ -75,7 +75,7 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
             value={panelCount.width}
             onChange={(e) => setPanelCount({ ...panelCount, width: e.target.value })}
             placeholder="Ex: 4"
-            className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
+            className="mt-1 bg-background/20 border-primary/30 text-foreground"
           />
         </div>
         <div>
@@ -86,13 +86,13 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
             value={panelCount.height}
             onChange={(e) => setPanelCount({ ...panelCount, height: e.target.value })}
             placeholder="Ex: 3"
-            className="mt-1 bg-purple-900/50 border-purple-500/30 text-white"
+            className="mt-1 bg-background/20 border-primary/30 text-foreground"
           />
         </div>
       </div>
       <Button 
         onClick={handleCalculate}
-        className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white"
+        className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground"
         disabled={!selectedPanelId || !panelCount.width || !panelCount.height}
       >
         <CalculatorIcon className="mr-2 h-4 w-4" />
