@@ -70,7 +70,7 @@ function getDefaultPanels(): LEDPanel[] {
   return [
     {
       id: "p1-25",
-      name: "P1.25",
+      name: "Painel",
       pValue: 1.25,
       width: 640,
       height: 480,
@@ -79,7 +79,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p1-53",
-      name: "P1.53",
+      name: "Painel",
       pValue: 1.53,
       width: 640,
       height: 480,
@@ -88,7 +88,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p2-60",
-      name: "P2.60",
+      name: "Painel",
       pValue: 2.60,
       width: 500,
       height: 500,
@@ -97,7 +97,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p2-97",
-      name: "P2.97",
+      name: "Painel",
       pValue: 2.97,
       width: 500,
       height: 500,
@@ -106,7 +106,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p2-97-0-5x1m",
-      name: "P2.97 0,5x1m",
+      name: "Painel",
       pValue: 2.97,
       width: 500,
       height: 1000,
@@ -115,7 +115,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p3-90",
-      name: "P3.90",
+      name: "Painel",
       pValue: 3.90,
       width: 500,
       height: 500,
@@ -124,7 +124,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p3-9-0-5x1m",
-      name: "P3.9 0,5x1m",
+      name: "Painel",
       pValue: 3.9,
       width: 500,
       height: 1000,
@@ -133,7 +133,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p4-8",
-      name: "P4.8",
+      name: "Painel",
       pValue: 4.8,
       width: 500,
       height: 500,
@@ -142,7 +142,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p5-1m",
-      name: "P5 1m",
+      name: "Painel",
       pValue: 5,
       width: 960,
       height: 960,
