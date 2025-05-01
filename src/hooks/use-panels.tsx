@@ -106,7 +106,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p2-97-0-5x1m",
-      name: "Painel 5x1m",
+      name: "Painel 0,5x1m",
       pValue: 2.97,
       width: 500,
       height: 1000,
@@ -124,7 +124,7 @@ function getDefaultPanels(): LEDPanel[] {
     },
     {
       id: "p3-9-0-5x1m",
-      name: "Painel 5x1m",
+      name: "Painel 0,5x1m",
       pValue: 3.9,
       width: 500,
       height: 1000,
