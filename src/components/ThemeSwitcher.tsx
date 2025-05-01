@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { palette } from "lucide-react";
+import { Palette } from "lucide-react";
 
 interface Theme {
   name: string;
@@ -87,7 +87,7 @@ const ThemeSwitcher = () => {
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" className="bg-white shadow-md border-primary/20 flex gap-2">
-          <palette className="h-4 w-4" />
+          <Palette className="h-4 w-4" />
           <span className="hidden sm:inline">Tema</span>
         </Button>
       </PopoverTrigger>
