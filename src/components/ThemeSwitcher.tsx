@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -8,7 +7,6 @@ interface Theme {
   name: string;
   primary: string;
   gradient: string;
-  isDark?: boolean;
 }
 
 const themes: Theme[] = [
@@ -21,7 +19,6 @@ const themes: Theme[] = [
   { name: 'Teal', primary: '#14B8A6', gradient: 'linear-gradient(135deg, #042f2e 0%, #0f766e 100%)' },
   { name: 'Cyan', primary: '#06B6D4', gradient: 'linear-gradient(135deg, #083344 0%, #0e7490 100%)' },
   { name: 'Amber', primary: '#F59E0B', gradient: 'linear-gradient(135deg, #451a03 0%, #b45309 100%)' },
-  { name: 'Dark', primary: '#6366F1', gradient: 'linear-gradient(135deg, #09090b 0%, #18181b 100%)', isDark: true }
 ];
 
 const ThemeSwitcher = () => {
@@ -43,38 +40,21 @@ const ThemeSwitcher = () => {
     // Apply the gradient for the body
     document.body.style.setProperty('--dashboard-gradient', theme.gradient);
     
-    // Set text and background colors based on whether the theme is dark
-    if (theme.isDark) {
-      document.documentElement.style.setProperty('--foreground', '0 0% 98%');
-      document.documentElement.style.setProperty('--background', '240 10% 4%');
-      document.documentElement.style.setProperty('--card', '240 10% 4%');
-      document.documentElement.style.setProperty('--card-foreground', '0 0% 98%');
-      document.documentElement.style.setProperty('--popover', '240 10% 4%');
-      document.documentElement.style.setProperty('--popover-foreground', '0 0% 98%');
-      document.documentElement.style.setProperty('--secondary', '240 3.7% 15.9%');
-      document.documentElement.style.setProperty('--secondary-foreground', '0 0% 98%');
-      document.documentElement.style.setProperty('--muted', '240 3.7% 15.9%');
-      document.documentElement.style.setProperty('--muted-foreground', '240 5% 64.9%');
-      document.documentElement.style.setProperty('--accent', '240 3.7% 15.9%');
-      document.documentElement.style.setProperty('--accent-foreground', '0 0% 98%');
-      document.documentElement.style.setProperty('--border', '240 3.7% 15.9%');
-      document.documentElement.style.setProperty('--input', '240 3.7% 15.9%');
-    } else {
-      document.documentElement.style.setProperty('--foreground', '222.2 84% 4.9%');
-      document.documentElement.style.setProperty('--background', '0 0% 100%');
-      document.documentElement.style.setProperty('--card', '0 0% 100%');
-      document.documentElement.style.setProperty('--card-foreground', '222.2 84% 4.9%');
-      document.documentElement.style.setProperty('--popover', '0 0% 100%');
-      document.documentElement.style.setProperty('--popover-foreground', '222.2 84% 4.9%');
-      document.documentElement.style.setProperty('--secondary', '210 40% 96.1%');
-      document.documentElement.style.setProperty('--secondary-foreground', '222.2 47.4% 11.2%');
-      document.documentElement.style.setProperty('--muted', '210 40% 96.1%');
-      document.documentElement.style.setProperty('--muted-foreground', '215.4 16.3% 46.9%');
-      document.documentElement.style.setProperty('--accent', '210 40% 96.1%');
-      document.documentElement.style.setProperty('--accent-foreground', '222.2 47.4% 11.2%');
-      document.documentElement.style.setProperty('--border', '214.3 31.8% 91.4%');
-      document.documentElement.style.setProperty('--input', '214.3 31.8% 91.4%');
-    }
+    // Set light theme colors (removed dark theme logic)
+    document.documentElement.style.setProperty('--foreground', '222.2 84% 4.9%');
+    document.documentElement.style.setProperty('--background', '0 0% 100%');
+    document.documentElement.style.setProperty('--card', '0 0% 100%');
+    document.documentElement.style.setProperty('--card-foreground', '222.2 84% 4.9%');
+    document.documentElement.style.setProperty('--popover', '0 0% 100%');
+    document.documentElement.style.setProperty('--popover-foreground', '222.2 84% 4.9%');
+    document.documentElement.style.setProperty('--secondary', '210 40% 96.1%');
+    document.documentElement.style.setProperty('--secondary-foreground', '222.2 47.4% 11.2%');
+    document.documentElement.style.setProperty('--muted', '210 40% 96.1%');
+    document.documentElement.style.setProperty('--muted-foreground', '215.4 16.3% 46.9%');
+    document.documentElement.style.setProperty('--accent', '210 40% 96.1%');
+    document.documentElement.style.setProperty('--accent-foreground', '222.2 47.4% 11.2%');
+    document.documentElement.style.setProperty('--border', '214.3 31.8% 91.4%');
+    document.documentElement.style.setProperty('--input', '214.3 31.8% 91.4%');
     
     // Apply the gradient for the root element
     const root = document.querySelector('.dashboard-gradient');

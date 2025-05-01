@@ -28,7 +28,7 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="width" className="text-white/90">Largura Desejada (metros)</Label>
+            <Label htmlFor="width" className="text-gray-500">Largura Desejada (metros)</Label>
             <Input
               id="width"
               type="number"
@@ -36,11 +36,11 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
               value={dimensions.width}
               onChange={(e) => setDimensions({ ...dimensions, width: e.target.value })}
               placeholder="Ex: 5"
-              className="mt-1 bg-background/20 border-primary/30 text-foreground"
+              className="mt-1 bg-white border-gray-200 text-gray-800"
             />
           </div>
           <div>
-            <Label htmlFor="height" className="text-white/90">Altura Desejada (metros)</Label>
+            <Label htmlFor="height" className="text-gray-500">Altura Desejada (metros)</Label>
             <Input
               id="height"
               type="number"
@@ -48,13 +48,13 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
               value={dimensions.height}
               onChange={(e) => setDimensions({ ...dimensions, height: e.target.value })}
               placeholder="Ex: 2.5"
-              className="mt-1 bg-background/20 border-primary/30 text-foreground"
+              className="mt-1 bg-white border-gray-200 text-gray-800"
             />
           </div>
         </div>
         <Button 
           onClick={handleCalculate}
-          className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground"
+          className="w-full mt-4 bg-primary hover:bg-primary/90 text-white"
           disabled={!selectedPanelId || !dimensions.width || !dimensions.height}
         >
           <CalculatorIcon className="mr-2 h-4 w-4" />
@@ -68,31 +68,31 @@ const CalculatorForm = ({ calculationMode, onCalculate, selectedPanelId }: Calcu
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="panelsWidth" className="text-white/90">Quantidade de Placas (Largura)</Label>
+          <Label htmlFor="panelsWidth" className="text-gray-500">Quantidade de Placas (Largura)</Label>
           <Input
             id="panelsWidth"
             type="number"
             value={panelCount.width}
             onChange={(e) => setPanelCount({ ...panelCount, width: e.target.value })}
             placeholder="Ex: 4"
-            className="mt-1 bg-background/20 border-primary/30 text-foreground"
+            className="mt-1 bg-white border-gray-200 text-gray-800"
           />
         </div>
         <div>
-          <Label htmlFor="panelsHeight" className="text-white/90">Quantidade de Placas (Altura)</Label>
+          <Label htmlFor="panelsHeight" className="text-gray-500">Quantidade de Placas (Altura)</Label>
           <Input
             id="panelsHeight"
             type="number"
             value={panelCount.height}
             onChange={(e) => setPanelCount({ ...panelCount, height: e.target.value })}
             placeholder="Ex: 3"
-            className="mt-1 bg-background/20 border-primary/30 text-foreground"
+            className="mt-1 bg-white border-gray-200 text-gray-800"
           />
         </div>
       </div>
       <Button 
         onClick={handleCalculate}
-        className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground"
+        className="w-full mt-4 bg-primary hover:bg-primary/90 text-white"
         disabled={!selectedPanelId || !panelCount.width || !panelCount.height}
       >
         <CalculatorIcon className="mr-2 h-4 w-4" />

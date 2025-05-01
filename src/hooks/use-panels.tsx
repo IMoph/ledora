@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import type { LEDPanel, CalculationResult } from "@/types/types";
 
 export function usePanels() {
-  // Fix: Ensure the default panels are loaded first, then override with any saved panels
+  const defaultPanels = getDefaultPanels();
+  
+  // Initialize with default panels and include any saved custom panels
   const [panels, setPanels] = useState<LEDPanel[]>(() => {
     const saved = localStorage.getItem("ledPanels");
-    const defaultPanels = getDefaultPanels();
-    // Only use saved panels if they exist, otherwise use defaults
-    return saved ? JSON.parse(saved) : defaultPanels;
+    return saved ? [...defaultPanels, ...JSON.parse(saved).filter((panel: LEDPanel) => 
+      // Filter out any saved panels that would duplicate a default panel ID
+      !defaultPanels.some(defaultPanel => defaultPanel.id === panel.id)
+    )] : defaultPanels;
   });
 
   const [calculationHistory, setCalculationHistory] = useState<CalculationResult[]>(() => {
@@ -16,8 +19,12 @@ export function usePanels() {
     return saved ? JSON.parse(saved) : [];
   });
 
+  // Only save custom panels (non-default ones) to localStorage
   useEffect(() => {
-    localStorage.setItem("ledPanels", JSON.stringify(panels));
+    const customPanels = panels.filter(
+      panel => !defaultPanels.some(defaultPanel => defaultPanel.id === panel.id)
+    );
+    localStorage.setItem("ledPanels", JSON.stringify(customPanels));
   }, [panels]);
 
   useEffect(() => {
@@ -25,10 +32,20 @@ export function usePanels() {
   }, [calculationHistory]);
 
   const handlePanelAdded = (panel: LEDPanel) => {
-    setPanels([...panels, panel]);
+    setPanels(currentPanels => {
+      // Check for duplicate IDs before adding
+      if (currentPanels.some(p => p.id === panel.id)) {
+        return currentPanels;
+      }
+      return [...currentPanels, panel];
+    });
   };
 
   const handlePanelDelete = (id: string) => {
+    // Prevent deletion of default panels
+    if (defaultPanels.some(panel => panel.id === id)) {
+      return; // Don't allow deletion of default panels
+    }
     setPanels(panels.filter((panel) => panel.id !== id));
   };
 
