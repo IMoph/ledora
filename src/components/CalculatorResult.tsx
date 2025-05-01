@@ -1,6 +1,6 @@
 
 import type { CalculationResult } from "@/types/types";
-import { Layout, ArrowDown, X, Weight, Zap } from "lucide-react";
+import { Layout, X, Weight, Zap } from "lucide-react";
 
 const CalculatorResult = ({ result }: { result: CalculationResult }) => (
   <div className="mt-4 sm:mt-6 p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg border border-primary/10 shadow-sm space-y-4">

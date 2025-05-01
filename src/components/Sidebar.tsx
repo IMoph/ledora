@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calculator, Layout, Menu, X, Settings, Info, LayoutPanelLeft } from "lucide-react";
@@ -37,7 +38,14 @@ const Sidebar = ({
   return <aside className={`${sidebarWidth} fixed left-0 top-0 h-full bg-white shadow-md transition-all duration-300 z-40`}>
       <div className="flex flex-col h-full">
         <div className="flex justify-between items-center p-4 border-b">
-          <h1 className={`${logoDisplay} font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400`}>Menus</h1>
+          <div className="flex items-center gap-2">
+            <img 
+              src="/lovable-uploads/00bada8e-d250-4eee-842c-6f731a81f1f8.png" 
+              alt="calcuLEDora Logo" 
+              className={`${logoDisplay} h-8 w-auto`} 
+            />
+            <h1 className={`${logoDisplay} font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400`}>calcuLEDora</h1>
+          </div>
           <Button variant="ghost" size="icon" onClick={toggleSidebar}>
             {collapsed ? <Menu /> : <X />}
           </Button>

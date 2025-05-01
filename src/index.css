@@ -25,6 +25,7 @@
     --input: 240 5.9% 90%;
     --ring: 267 100% 50%;
     --radius: 0.75rem;
+    --dashboard-gradient: linear-gradient(135deg, #1a0b2e 0%, #2f1c4a 100%);
   }
 
   html, body {
@@ -57,7 +58,7 @@
   }
 
   .dashboard-gradient {
-    background: linear-gradient(135deg, #1a0b2e 0%, #2f1c4a 100%);
+    background: var(--dashboard-gradient, linear-gradient(135deg, #1a0b2e 0%, #2f1c4a 100%));
   }
 
   .hover-scale {
