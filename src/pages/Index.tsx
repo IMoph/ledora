@@ -15,9 +15,11 @@ const Index = () => {
   const [panelsDialogOpen, setPanelsDialogOpen] = useState(false);
   const [tutorialDialogOpen, setTutorialDialogOpen] = useState(false);
   
+  // Fix: Ensure the default panels are loaded first, then override with any saved panels
   const [panels, setPanels] = useState<LEDPanel[]>(() => {
     const saved = localStorage.getItem("ledPanels");
     const defaultPanels = getDefaultPanels();
+    // Only use saved panels if they exist, otherwise use defaults
     return saved ? JSON.parse(saved) : defaultPanels;
   });
 
@@ -90,7 +92,6 @@ const Index = () => {
             
             {!isMobile && (
               <div className="flex gap-2">
-                <ThemeSwitcher />
                 <TutorialDialog
                   open={tutorialDialogOpen}
                   onOpenChange={setTutorialDialogOpen}
@@ -121,7 +122,6 @@ const Index = () => {
       {/* Dialogs for mobile - we control them via state instead of self-contained */}
       {isMobile && (
         <>
-          <ThemeSwitcher />
           <TutorialDialog
             open={tutorialDialogOpen}
             onOpenChange={setTutorialDialogOpen}

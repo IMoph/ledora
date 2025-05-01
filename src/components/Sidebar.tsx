@@ -3,20 +3,26 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calculator, Layout, Menu, X, Settings, Info, LayoutPanelLeft } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import ThemeSwitcher from "./ThemeSwitcher";
+
 interface SidebarProps {
   onPanelsClick: () => void;
   onTutorialClick: () => void;
 }
+
 const Sidebar = ({
   onPanelsClick,
   onTutorialClick
 }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(true);
   const isMobile = useIsMobile();
+  
   const toggleSidebar = () => setCollapsed(!collapsed);
+  
   const sidebarWidth = collapsed ? "w-16" : "w-64";
   const logoDisplay = collapsed ? "hidden" : "block";
   const textDisplay = collapsed ? "hidden" : "flex";
+  
   if (isMobile) {
     return <div className="fixed bottom-4 right-4 z-50">
         <Button onClick={toggleSidebar} size="icon" className="rounded-full shadow-lg bg-primary hover:bg-primary/80 h-14 w-14">
@@ -32,9 +38,13 @@ const Sidebar = ({
               <Info size={18} />
               Tutorial
             </Button>
+            <div className="mt-1">
+              <ThemeSwitcher />
+            </div>
           </div>}
       </div>;
   }
+  
   return <aside className={`${sidebarWidth} fixed left-0 top-0 h-full bg-white shadow-md transition-all duration-300 z-40`}>
       <div className="flex flex-col h-full">
         <div className="flex justify-between items-center p-4 border-b">
@@ -65,6 +75,12 @@ const Sidebar = ({
               <Info className="mr-2" />
               <span className={textDisplay}>Tutorial</span>
             </Button>
+            
+            {!collapsed && (
+              <div className="mt-4 px-1">
+                <ThemeSwitcher />
+              </div>
+            )}
           </div>
         </div>
         
@@ -77,4 +93,5 @@ const Sidebar = ({
       </div>
     </aside>;
 };
+
 export default Sidebar;
