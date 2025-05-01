@@ -43,7 +43,7 @@ const CalculatorForm = ({
             <Input id="height" type="number" step="0.1" value={dimensions.height} onChange={e => setDimensions({
             ...dimensions,
             height: e.target.value
-          })} placeholder="Ex: 2.5" className="mt-1 bg-background/20 border-primary/30 text-foreground" />
+          })} placeholder="Ex: 2.5" className="mt-1 bg-background/20 border-primary/30 text-foreground tex-gray-800\n" />
           </div>
         </div>
         <Button onClick={handleCalculate} className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground" disabled={!selectedPanelId || !dimensions.width || !dimensions.height}>
