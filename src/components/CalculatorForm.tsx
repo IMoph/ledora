@@ -32,7 +32,7 @@ const CalculatorForm = ({
     return <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="width" className="text-gray-800">Largura Desejada (metros)</Label>
+            <Label htmlFor="width" className="text-gray/800">Largura Desejada (metros)</Label>
             <Input id="width" type="number" step="0.1" value={dimensions.width} onChange={e => setDimensions({
             ...dimensions,
             width: e.target.value
