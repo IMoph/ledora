@@ -44,7 +44,7 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
         </div>
         
         <div className="flex flex-col">
-          <span className="text-sm font-medium text-gray-500">Gabinetes por Cabo de Sinal</span>
+          <span className="text-sm font-medium text-gray-500">Placas por Cabo de Sinal</span>
           <span className="font-semibold text-gray-900">{result.cabinetsPerSignalCable}</span>
         </div>
       </div>
