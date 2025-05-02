@@ -45,7 +45,7 @@ const CalculationHistory = ({ history }: CalculationHistoryProps) => {
               </div>
               <div className="grid grid-cols-2 gap-1 text-xs">
                 <p>Quantidade: <span className="font-medium">{item.panelsNeeded}</span></p>
-                <p>Distribuição: <span className="font-medium">{item.panelsWide}x{item.panelsHigh}</span></p>
+                <p>Distribuição de Placas: <span className="font-medium">{item.panelsWide}x{item.panelsHigh}</span></p>
                 <p>Resolução: <span className="font-medium">{item.finalResolutionWidth}x{item.finalResolutionHeight}</span></p>
                 <p>Proporção: <span className="font-medium">{item.aspectRatio}</span></p>
                 <p>Dimensões: <span className="font-medium">{item.widthInMeters.toFixed(2)}x{item.heightInMeters.toFixed(2)}m</span></p>
