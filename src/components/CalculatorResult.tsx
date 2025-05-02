@@ -24,7 +24,7 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
         </div>
         
         <div className="flex flex-col">
-          <span className="text-sm font-medium text-gray-500">Distribuição</span>
+          <span className="text-sm font-medium text-gray-500">Distribuição de Placas</span>
           <div className="flex items-center gap-1">
             <span className="font-semibold text-gray-900">{result.panelsWide}</span>
             <X className="h-3.5 w-3.5 text-gray-500" />
