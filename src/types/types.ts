@@ -28,4 +28,5 @@ export interface CalculationResult {
   totalWeight?: number;
   totalWatts?: number;
   totalKVA?: number;
+  cabinetsPerSignalCable: number;
 }

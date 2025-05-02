@@ -42,6 +42,11 @@ const CalculatorResult = ({ result }: { result: CalculationResult }) => (
             <span className="text-gray-500 ml-1">pixels</span>
           </div>
         </div>
+        
+        <div className="flex flex-col">
+          <span className="text-sm font-medium text-gray-500">Gabinetes por Cabo de Sinal</span>
+          <span className="font-semibold text-gray-900">{result.cabinetsPerSignalCable}</span>
+        </div>
       </div>
       
       <div className="space-y-3">

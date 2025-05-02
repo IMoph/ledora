@@ -78,6 +78,10 @@ export const useCalculator = ({
 
     const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
     const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
+    
+    // Calculate cabinets per signal cable
+    const pixelsPerPanel = panel.resolutionWidth * panel.resolutionHeight;
+    const cabinetsPerSignalCable = Math.floor(PIXELS_PER_NETWORK_CABLE / pixelsPerPanel);
 
     const calculationResult: CalculationResult = {
       panelsNeeded: totalPanels,
@@ -93,6 +97,7 @@ export const useCalculator = ({
       timestamp: new Date().toISOString(),
       panelName: panel.name,
       pValue: panel.pValue,
+      cabinetsPerSignalCable,
     };
 
     // Add weight calculation if panel has weight
@@ -129,6 +134,10 @@ export const useCalculator = ({
 
     const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
     const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
+    
+    // Calculate cabinets per signal cable
+    const pixelsPerPanel = panel.resolutionWidth * panel.resolutionHeight;
+    const cabinetsPerSignalCable = Math.floor(PIXELS_PER_NETWORK_CABLE / pixelsPerPanel);
 
     const calculationResult: CalculationResult = {
       panelsNeeded: totalPanels,
@@ -144,6 +153,7 @@ export const useCalculator = ({
       timestamp: new Date().toISOString(),
       panelName: panel.name,
       pValue: panel.pValue,
+      cabinetsPerSignalCable,
     };
 
     // Add weight calculation if panel has weight

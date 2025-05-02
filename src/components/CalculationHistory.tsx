@@ -50,6 +50,7 @@ const CalculationHistory = ({ history }: CalculationHistoryProps) => {
                 <p>Proporção: <span className="font-medium">{item.aspectRatio}</span></p>
                 <p>Dimensões: <span className="font-medium">{item.widthInMeters.toFixed(2)}x{item.heightInMeters.toFixed(2)}m</span></p>
                 <p>Cabos RJ45: <span className="font-medium">{item.networkCablesNeeded}</span></p>
+                <p>Gabinetes/Cabo: <span className="font-medium">{item.cabinetsPerSignalCable}</span></p>
               </div>
             </Card>
           ))}
