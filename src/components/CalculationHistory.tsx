@@ -48,10 +48,10 @@ const CalculationHistory = ({ history }: CalculationHistoryProps) => {
                 <p>Distribuição de Placas: <span className="font-medium">{item.panelsWide}x{item.panelsHigh}</span></p>
                 <p>Resolução: <span className="font-medium">{item.finalResolutionWidth}x{item.finalResolutionHeight}</span></p>
                 <p>Proporção: <span className="font-medium">{item.aspectRatio}</span></p>
-                <p>Dimensões: <span className="font-medium">{item.widthInMeters.toFixed(2)}x{item.heightInMeters.toFixed(2)}m</span></p>
+                <p>Dimensões: <span className="font-medium">{item.widthInMeters.toFixed(2)}x{item.heightInMeters.toFixed(2)}</span></p>
                 <p>Cabos RJ45: <span className="font-medium">{item.networkCablesNeeded}</span></p>
                 <p>Placas/Cabo: <span className="font-medium">{item.cabinetsPerSignalCable}</span></p>
-                <p>Área Total: <span className="font-medium">{item.areaInSquareMeters}</span></p>
+                <p>Área Total: <span className="font-medium">{item.areaInSquareMeters}m²</span></p>
               </div>
             </Card>
           ))}
