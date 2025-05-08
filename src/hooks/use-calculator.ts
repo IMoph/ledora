@@ -76,12 +76,14 @@ export const useCalculator = ({
     const finalHeightInMeters = (panelsHigh * panel.height) / 1000;
     const totalAreaInSquareMeters = finalWidthInMeters * finalHeightInMeters;
 
-    const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
     const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
     
     // Calculate cabinets per signal cable
     const pixelsPerPanel = panel.resolutionWidth * panel.resolutionHeight;
     const cabinetsPerSignalCable = Math.floor(PIXELS_PER_NETWORK_CABLE / pixelsPerPanel);
+    
+    // New formula for calculating network cables needed
+    const networkCablesNeeded = Math.ceil(totalPanels / cabinetsPerSignalCable);
 
     const calculationResult: CalculationResult = {
       panelsNeeded: totalPanels,
@@ -132,12 +134,14 @@ export const useCalculator = ({
     const finalHeightInMeters = (panelsHigh * panel.height) / 1000;
     const totalAreaInSquareMeters = finalWidthInMeters * finalHeightInMeters;
 
-    const networkCablesNeeded = Math.ceil(totalPixels / PIXELS_PER_NETWORK_CABLE);
     const aspectRatio = getAspectRatio(finalResolutionWidth, finalResolutionHeight);
     
     // Calculate cabinets per signal cable
     const pixelsPerPanel = panel.resolutionWidth * panel.resolutionHeight;
     const cabinetsPerSignalCable = Math.floor(PIXELS_PER_NETWORK_CABLE / pixelsPerPanel);
+    
+    // New formula for calculating network cables needed
+    const networkCablesNeeded = Math.ceil(totalPanels / cabinetsPerSignalCable);
 
     const calculationResult: CalculationResult = {
       panelsNeeded: totalPanels,
