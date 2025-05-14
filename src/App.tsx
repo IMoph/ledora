@@ -1,28 +1,27 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+import { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-const queryClient = new QueryClient();
+import Index from './pages/Index'
+import NotFound from './pages/NotFound'
+import { iOSInstallPopup } from './components/iOSInstallPopup'
+import { Toaster } from './components/ui/toaster'
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+import './App.css'
+
+function App() {
+  return (
+    <Router>
+      <div className="app">
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+        <Toaster />
+        <iOSInstallPopup />
+      </div>
+    </Router>
+  )
+}
 
-export default App;
+export default App
