@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog';
 
-export function iOSInstallPopup() {
+export function IOSInstallPopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
